@@ -119,7 +119,7 @@ export default function HomePage() {
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
                 <Link
-                  href={item === "Home" ? "/" : `/${item.toLowerCase().replace(/\s+/g, "-")}`}
+                  href={item === "Home" ? "/" : `/${item.toLowerCase().replace(" us", "").replace(/\s+/g, "-")}`}
                   className="text-sm font-medium hover:text-orange-500 transition-all duration-300 hover:scale-110 relative group"
                 >
                   {item}
@@ -325,7 +325,14 @@ export default function HomePage() {
                         <div
                           className="w-full h-full animate-pulse"
                           style={{
-                            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%23fb923c' fillOpacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+                            backgroundImage: `url("data:image/svg+xml,%3Csvg width=\'60\'
+ height=\'60\'
+ viewBox=\'0 0 60 60\'
+ xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\'
+ fillRule=\'evenodd\'%3E%3Cg fill=\'%23fb923c\'
+ fillOpacity=\'0.1\'%3E%3Ccircle cx=\'30\'
+ cy=\'30\'
+ r=\'2\'%3E%3C/circle%3E%3C/g%3E%3C/g%3E%3C/svg%3E" )`,
                             backgroundRepeat: "repeat",
                           }}
                         />
@@ -341,20 +348,18 @@ export default function HomePage() {
                       <CardTitle className="group-hover:text-orange-600 transition-colors duration-300">
                         {category.title}
                       </CardTitle>
-                      <CardDescription className="text-sm leading-relaxed">{category.description}</CardDescription>
+                      <CardDescription className="text-sm leading-relaxed text-gray-500">
+                        {category.description}
+                      </CardDescription>
                     </CardHeader>
-
-                    <CardContent>
-                      <div className="hover:scale-105 transition-transform duration-300">
-                        <Button
-                          variant="outline"
-                          className={`w-full group-hover:bg-${category.color}-50 bg-transparent transition-all duration-300 hover:shadow-md btn-hover-effect`}
-                          onClick={() => handleCategoryClick(category.category)}
-                        >
-                          Explore {category.title.split(" ")[0]}
-                          <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
-                        </Button>
-                      </div>
+                    <CardContent className="flex justify-center pb-6">
+                      <Button
+                        variant="outline"
+                        className="hover:bg-orange-50 transition-all duration-300"
+                        onClick={() => handleCategoryClick(category.category)}
+                      >
+                        View {category.title}
+                      </Button>
                     </CardContent>
                   </Card>
                 </div>
@@ -363,358 +368,197 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Featured Products */}
-        <section className="py-16 lg:py-24 bg-gray-50/50 backdrop-blur-sm">
+        {/* About Us Section */}
+        <section className="py-16 lg:py-24 bg-gradient-to-br from-gray-50 to-gray-100 relative">
           <div className="container px-4 md:px-6">
-            <div className="text-center mb-12 animate-fade-in-up">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Featured Products</h2>
-              <p className="mt-4 text-gray-600 md:text-xl max-w-3xl mx-auto">
-                Discover our most popular and highly-rated technology products
-              </p>
-            </div>
-
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {[
-                {
-                  name: "MacBook Pro M3 16-inch",
-                  price: "Starting from $2,399",
-                  rating: 4.9,
-                  reviews: 128,
-                  badge: "Best Seller",
-                  description:
-                    "The most powerful MacBook Pro ever, featuring the revolutionary M3 chip with 12-core CPU and 18-core GPU. Perfect for professional video editing, 3D rendering, and intensive creative workflows.",
-                  specs: ["M3 Pro Chip", "16GB Unified Memory", "512GB SSD", "16-inch Liquid Retina XDR"],
-                  image: "/images/macbook-pro-m3-16.png",
-                },
-                {
-                  name: "Gaming Laptop RTX 4080",
-                  price: "Starting from $1,899",
-                  rating: 4.8,
-                  reviews: 89,
-                  badge: "New Arrival",
-                  description:
-                    "Ultimate gaming performance with NVIDIA GeForce RTX 4080, Intel Core i7-13700HX, and 165Hz display. Dominate every game with ray tracing and DLSS 3 technology.",
-                  specs: ["RTX 4080 16GB", "Intel i7-13700HX", "32GB DDR5", "165Hz QHD Display"],
-                  image: "/images/gaming-laptop-rtx-4080.png",
-                },
-                {
-                  name: "Gaming Headset Pro X",
-                  price: "Starting from $299",
-                  rating: 4.7,
-                  reviews: 167,
-                  badge: "Popular",
-                  description:
-                    "Professional gaming headset with 7.1 surround sound, noise cancellation, and premium comfort. Crystal-clear communication and immersive audio experience.",
-                  specs: ["7.1 Surround Sound", "Noise Cancellation", "50mm Drivers", "Wireless & Wired"],
-                  image: "/images/gaming-headset-pro-x.png",
-                },
-                {
-                  name: '4K Gaming Monitor 32"',
-                  price: "Starting from $599",
-                  rating: 4.8,
-                  reviews: 134,
-                  badge: "Editor's Choice",
-                  description:
-                    "Professional 4K gaming monitor with 144Hz refresh rate, HDR10 support, and ultra-low input lag. Perfect for competitive gaming and content creation.",
-                  specs: ["4K UHD Resolution", "144Hz Refresh Rate", "1ms Response Time", "HDR10 Support"],
-                  image: "/images/4k-gaming-monitor-32.png",
-                },
-              ].map((product, index) => (
-                <div
-                  key={index}
-                  className={`group animate-fade-in-up hover:scale-103 hover:rotate-1 transition-all duration-500 card-hover`}
-                  style={{ animationDelay: `${index * 100}ms` }}
+            <div className="grid gap-8 lg:grid-cols-2 lg:gap-12 items-center">
+              <div className="animate-fade-in-left">
+                <Image
+                  src="/images/company-journey.png"
+                  width="600"
+                  height="400"
+                  alt="About Zainab Star"
+                  className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full shadow-xl hover:shadow-2xl transition-shadow duration-300"
+                />
+              </div>
+              <div className="space-y-4 animate-fade-in-right">
+                <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-200">Our Story</Badge>
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl bg-gradient-to-r from-gray-800 to-gray-500 bg-clip-text text-transparent">
+                  Pioneering Technology in the MENA Region
+                </h2>
+                <p className="max-w-[600px] text-gray-600 md:text-xl">
+                  Zainab Star is a leading technology provider dedicated to bringing the latest innovations to the Middle
+                  East and Africa. With a focus on quality, reliability, and customer satisfaction, we strive to empower
+                  businesses and individuals with cutting-edge solutions.
+                </p>
+                <Link
+                  href="/about"
+                  className="inline-flex h-10 items-center justify-center rounded-md bg-blue-500 px-8 text-sm font-medium text-white shadow transition-colors hover:bg-blue-600 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-blue-950 disabled:pointer-events-none disabled:opacity-50"
                 >
-                  <Card className="group hover:shadow-xl transition-all duration-500 overflow-hidden bg-white/90 backdrop-blur-sm border-0">
-                    <CardHeader className="p-0 relative overflow-hidden">
-                      <div className="relative">
-                        <Image
-                          src={product.image || "/placeholder.svg"}
-                          width="350"
-                          height="250"
-                          alt={product.name}
-                          className="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                        />
-                        <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:scale-110">
-                          <button onClick={() => handleViewProduct(product.name)}>
-                            <Eye className="h-4 w-4 text-gray-600" />
-                          </button>
-                        </div>
-                        <Badge className="absolute top-2 left-2 bg-orange-500 hover:bg-orange-600 animate-pulse">
-                          {product.badge}
-                        </Badge>
-                      </div>
-                    </CardHeader>
-
-                    <CardContent className="p-4">
-                      <h3 className="font-semibold text-lg mb-2 group-hover:text-orange-600 transition-colors duration-300">
-                        {product.name}
-                      </h3>
-
-                      <p className="text-sm text-gray-600 mb-3 line-clamp-2">{product.description}</p>
-
-                      <div className="flex items-center mb-3">
-                        <div className="flex items-center">
-                          {[...Array(5)].map((_, i) => (
-                            <div key={i} className={`animate-fade-in`} style={{ animationDelay: `${i * 100}ms` }}>
-                              <Star
-                                className={`h-4 w-4 ${
-                                  i < Math.floor(product.rating) ? "text-yellow-400 fill-current" : "text-gray-300"
-                                }`}
-                              />
-                            </div>
-                          ))}
-                        </div>
-                        <span className="text-sm text-gray-600 ml-2">
-                          {product.rating} ({product.reviews})
-                        </span>
-                      </div>
-
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center space-x-2">
-                          <span className="text-lg font-bold text-orange-600">{product.price}</span>
-                        </div>
-                      </div>
-
-                      <div className="flex gap-2">
-                        <div className="flex-1 hover:scale-105 transition-transform duration-300">
-                          <Button
-                            size="sm"
-                            className="w-full bg-orange-500 hover:bg-orange-600 transition-all duration-300 btn-hover-effect"
-                            onClick={() => handleInquireProduct(product.name)}
-                          >
-                            Inquire Now
-                          </Button>
-                        </div>
-                        <div className="hover:scale-110 transition-transform duration-300">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => addToWishlist(product.name)}
-                            className="hover:bg-red-50 hover:text-red-600 hover:border-red-300 transition-all duration-300"
-                          >
-                            <Heart className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
-              ))}
-            </div>
-
-            <div className="text-center mt-8 animate-fade-in-up" style={{ animationDelay: "400ms" }}>
-              <div className="hover:scale-105 transition-transform duration-300">
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="hover:bg-orange-50 hover:border-orange-300 transition-all duration-300 bg-transparent btn-hover-effect"
-                  onClick={handleViewProducts}
-                >
-                  View All Products
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
+                  Learn More About Us
+                </Link>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Why Choose Us */}
-        <section className="py-16 lg:py-24 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 to-amber-500/5" />
-          <div className="container px-4 md:px-6 relative z-10">
-            <div className="text-center mb-12 animate-fade-in-up">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Why Choose Zainab Star?</h2>
-              <p className="mt-4 text-gray-600 md:text-xl max-w-3xl mx-auto">
-                We're committed to delivering exceptional technology solutions with unmatched service
-              </p>
-            </div>
-
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-              {[
-                {
-                  icon: Shield,
-                  title: "Quality Guarantee",
-                  description:
-                    "All products come with comprehensive warranty and quality assurance. We stand behind every product we showcase with full manufacturer support.",
-                  color: "orange",
-                },
-                {
-                  icon: Truck,
-                  title: "Fast Delivery",
-                  description:
-                    "Quick and secure shipping across the Middle East and Africa. Same-day delivery available in major cities with real-time tracking.",
-                  color: "blue",
-                },
-                {
-                  icon: Users,
-                  title: "Expert Support",
-                  description:
-                    "24/7 technical support and customer service from our expert team. Certified technicians ready to help with any technical issues.",
-                  color: "green",
-                },
-                {
-                  icon: Award,
-                  title: "Trusted Brand",
-                  description:
-                    "Years of experience serving customers with premium technology solutions. Award-winning customer service and industry recognition.",
-                  color: "purple",
-                },
-              ].map((feature, index) => (
-                <div
-                  key={index}
-                  className={`text-center group animate-fade-in-up hover:scale-105 hover:-translate-y-2 transition-all duration-500`}
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <div
-                    className={`mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-${feature.color}-100 group-hover:bg-${feature.color}-200 transition-all duration-300 hover:rotate-12`}
-                  >
-                    <feature.icon className={`h-8 w-8 text-${feature.color}-600`} />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-2 group-hover:text-orange-600 transition-colors duration-300">
-                    {feature.title}
-                  </h3>
-                  <p className="text-gray-600 leading-relaxed">{feature.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Customer Testimonials Preview */}
-        <section className="py-16 lg:py-24 bg-gray-50/50 backdrop-blur-sm">
+        {/* Our Partners Section */}
+        <section className="py-16 lg:py-24 relative">
           <div className="container px-4 md:px-6">
             <div className="text-center mb-12 animate-fade-in-up">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">What Our Customers Say</h2>
-              <p className="mt-4 text-gray-600 md:text-xl max-w-3xl mx-auto">
-                Hear from satisfied customers across the Middle East and Africa
-              </p>
-            </div>
-
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {[
-                {
-                  name: "Ahmed Hassan",
-                  location: "Dubai, UAE",
-                  rating: 5,
-                  comment:
-                    "Excellent service and high-quality products. My gaming laptop arrived quickly and works perfectly! The customer support team was incredibly helpful throughout the entire process.",
-                  image: "/images/testimonials/professional-man-avatar.png",
-                },
-                {
-                  name: "Fatima Al-Zahra",
-                  location: "Cairo, Egypt",
-                  rating: 5,
-                  comment:
-                    "Outstanding customer support. They helped me choose the perfect laptop for my business needs. The delivery was fast and the product exceeded my expectations.",
-                  image: "/images/testimonials/professional-woman-avatar.png",
-                },
-                {
-                  name: "Omar Benali",
-                  location: "Casablanca, Morocco",
-                  rating: 5,
-                  comment:
-                    "Great prices and authentic products. Zainab Star is my go-to for all tech purchases. The quality is consistently excellent and shipping is reliable.",
-                  image: "/images/testimonials/professional-man-avatar.png",
-                },
-              ].map((testimonial, index) => (
-                <div
-                  key={index}
-                  className={`animate-fade-in-up hover:scale-103 hover:rotate-1 transition-all duration-500 card-hover`}
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <Card className="p-6 hover:shadow-xl transition-all duration-500 bg-white/90 backdrop-blur-sm border-0">
-                    <div className="flex items-center mb-4">
-                      <Image
-                        src={testimonial.image || "/placeholder.svg"}
-                        width="50"
-                        height="50"
-                        alt={testimonial.name}
-                        className="rounded-full mr-4 object-cover"
-                      />
-                      <div>
-                        <p className="font-semibold">{testimonial.name}</p>
-                        <p className="text-sm text-gray-500">{testimonial.location}</p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center mb-4">
-                      {[...Array(5)].map((_, i) => (
-                        <div key={i} className="animate-fade-in" style={{ animationDelay: `${i * 100}ms` }}>
-                          <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                        </div>
-                      ))}
-                    </div>
-
-                    <p className="text-gray-600 leading-relaxed">"{testimonial.comment}"</p>
-                  </Card>
-                </div>
-              ))}
-            </div>
-
-            <div className="text-center mt-8 animate-fade-in-up" style={{ animationDelay: "300ms" }}>
-              <div className="hover:scale-105 transition-transform duration-300">
-                <Button
-                  variant="outline"
-                  size="lg"
-                  asChild
-                  className="hover:bg-orange-50 hover:border-orange-300 transition-all duration-300 bg-transparent btn-hover-effect"
-                >
-                  <Link href="/testimonials">
-                    Read More Reviews
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="py-16 lg:py-24 bg-gradient-to-r from-orange-500 to-amber-500 relative overflow-hidden animate-fade-in">
-          <div className="absolute inset-0">
-            <div className="absolute inset-0 bg-gradient-to-r from-orange-600/20 to-amber-600/20 animate-pulse" />
-            <div className="absolute top-0 left-0 w-full h-full opacity-20">
-              <div
-                className="w-full h-full animate-pulse"
-                style={{
-                  backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%23ffffff' fillOpacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-                  backgroundRepeat: "repeat",
-                }}
-              />
-            </div>
-          </div>
-
-          <div className="container px-4 md:px-6 relative z-10">
-            <div className="text-center text-white animate-fade-in-up">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-4">
-                Ready to Explore Our Tech?
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+                Our Valued Partners
               </h2>
-              <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
-                Join thousands of satisfied customers and discover the latest in technology solutions
+              <p className="mt-4 text-gray-600 md:text-xl max-w-3xl mx-auto">
+                Collaborating with industry leaders to bring you the best technology solutions.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <div className="hover:scale-105 hover:shadow-lg hover:shadow-white/20 transition-all duration-300">
-                  <Button
-                    size="lg"
-                    variant="secondary"
-                    className="bg-white text-orange-600 hover:bg-gray-100 transition-all duration-300 btn-hover-effect"
-                    onClick={handleViewProducts}
-                  >
-                    View Products
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8 justify-items-center items-center">
+              {[
+                { src: "/images/partners/ctroniq-logo.png", alt: "Ctronics Logo" },
+                { src: "/images/partners/elari-logo.png", alt: "Elari Logo" },
+                { src: "/images/partners/lindy-logo.png", alt: "Lindy Logo" },
+                { src: "/images/partners/olympia-logo.png", alt: "Olympia Logo" },
+                { src: "/images/partners/trevi-logo.png", alt: "Trevi Logo" },
+              ].map((partner, index) => (
+                <div
+                  key={index}
+                  className="flex items-center justify-center p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105"
+                >
+                  <Image src={partner.src} width="120" height="60" alt={partner.alt} className="object-contain" />
                 </div>
-                <div className="hover:scale-105 transition-transform duration-300">
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="border-white text-white hover:bg-white hover:text-orange-600 bg-transparent transition-all duration-300"
-                    onClick={handleContactUs}
-                  >
-                    Contact Us
-                  </Button>
-                </div>
+              ))}
+            </div>
+
+            <div className="text-center mt-12 animate-fade-in-up">
+              <Link
+                href="/partners"
+                className="inline-flex h-10 items-center justify-center rounded-md bg-orange-500 px-8 text-sm font-medium text-white shadow transition-colors hover:bg-orange-600 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-orange-950 disabled:pointer-events-none disabled:opacity-50"
+              >
+                View All Partners
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Testimonials Section */}
+        <section className="py-16 lg:py-24 bg-gradient-to-br from-orange-50 to-yellow-50 relative">
+          <div className="container px-4 md:px-6">
+            <div className="text-center mb-12 animate-fade-in-up">
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+                What Our Clients Say
+              </h2>
+              <p className="mt-4 text-gray-600 md:text-xl max-w-3xl mx-auto">
+                Hear directly from our satisfied customers about their experience with Zainab Star.
+              </p>
+            </div>
+
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              <Card className="animate-fade-in-up hover:shadow-xl transition-shadow duration-300">
+                <CardContent className="pt-6">
+                  <div className="flex items-center mb-4">
+                    <Image
+                      src="/images/testimonials/professional-man-avatar.png"
+                      width="64"
+                      height="64"
+                      alt="Client Avatar"
+                      className="rounded-full mr-4 border-2 border-orange-300"
+                    />
+                    <div>
+                      <p className="font-semibold text-lg">Ahmed Al-Farsi</p>
+                      <p className="text-sm text-gray-500">CEO, Tech Solutions Inc.</p>
+                    </div>
+                  </div>
+                  <p className="text-gray-700 italic">
+                    "Zainab Star has consistently provided us with top-notch IT solutions. Their expertise and customer
+                    service are unparalleled. Highly recommended!"
+                  </p>
+                </CardContent>
+              </Card>
+              <Card className="animate-fade-in-up hover:shadow-xl transition-shadow duration-300" style={{ animationDelay: "100ms" }}>
+                <CardContent className="pt-6">
+                  <div className="flex items-center mb-4">
+                    <Image
+                      src="/images/testimonials/professional-woman-avatar.png"
+                      width="64"
+                      height="64"
+                      alt="Client Avatar"
+                      className="rounded-full mr-4 border-2 border-yellow-300"
+                    />
+                    <div>
+                      <p className="font-semibold text-lg">Fatima Zahra</p>
+                      <p className="text-sm text-gray-500">Marketing Director, Innovate Corp.</p>
+                    </div>
+                  </div>
+                  <p className="text-gray-700 italic">
+                    "The gaming equipment we sourced from Zainab Star transformed our e-sports arena. Quality products
+                    and excellent support. A true partner!"
+                  </p>
+                </CardContent>
+              </Card>
+              <Card className="animate-fade-in-up hover:shadow-xl transition-shadow duration-300" style={{ animationDelay: "200ms" }}>
+                <CardContent className="pt-6">
+                  <div className="flex items-center mb-4">
+                    <Image
+                      src="/images/testimonials/professional-man-avatar.png"
+                      width="64"
+                      height="64"
+                      alt="Client Avatar"
+                      className="rounded-full mr-4 border-2 border-amber-300"
+                    />
+                    <div>
+                      <p className="font-semibold text-lg">Omar Abdullah</p>
+                      <p className="text-sm text-gray-500">IT Manager, Global Enterprises</p>
+                    </div>
+                  </div>
+                  <p className="text-gray-700 italic">
+                    "Their range of monitors and accessories is impressive. Zainab Star helped us set up our new office
+                    with the best display solutions. Fantastic service!"
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="text-center mt-12 animate-fade-in-up">
+              <Link
+                href="/testimonials"
+                className="inline-flex h-10 items-center justify-center rounded-md bg-blue-500 px-8 text-sm font-medium text-white shadow transition-colors hover:bg-blue-600 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-blue-950 disabled:pointer-events-none disabled:opacity-50"
+              >
+                Read All Testimonials
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Contact Section */}
+        <section className="py-16 lg:py-24 bg-gradient-to-br from-gray-100 to-gray-200 relative">
+          <div className="container px-4 md:px-6">
+            <div className="grid gap-8 lg:grid-cols-2 lg:gap-12 items-center">
+              <div className="space-y-4 animate-fade-in-left">
+                <Badge className="bg-green-100 text-green-800 hover:bg-green-200">Get in Touch</Badge>
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl bg-gradient-to-r from-gray-800 to-gray-500 bg-clip-text text-transparent">
+                  Have Questions? We\"re Here to Help.
+                </h2>
+                <p className="max-w-[600px] text-gray-600 md:text-xl">
+                  Whether you need assistance with product selection, technical support, or partnership inquiries, our
+                  team is ready to provide expert guidance.
+                </p>
+                <Button
+                  className="inline-flex h-10 items-center justify-center rounded-md bg-green-500 px-8 text-sm font-medium text-white shadow transition-colors hover:bg-green-600 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-green-950 disabled:pointer-events-none disabled:opacity-50"
+                  onClick={handleContactUs}
+                >
+                  Contact Our Team
+                </Button>
+              </div>
+              <div className="animate-fade-in-right">
+                <Image
+                  src="/images/partnership-success.png"
+                  width="600"
+                  height="400"
+                  alt="Contact Us"
+                  className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full shadow-xl hover:shadow-2xl transition-shadow duration-300"
+                />
               </div>
             </div>
           </div>
@@ -722,103 +566,107 @@ export default function HomePage() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-gray-900 to-gray-800" />
-        <div className="container px-4 md:px-6 relative z-10">
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-            <div className="animate-fade-in-up">
-              <div className="flex items-center space-x-3 mb-4 group">
-                <div className="relative">
-                  <div className="absolute inset-0 bg-gradient-to-r from-orange-400 to-amber-400 rounded-xl blur-lg opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
-                  <div className="relative bg-white rounded-xl p-2 shadow-lg group-hover:shadow-xl transition-all duration-300">
-                    <Image
-                      src="/images/zainab-star-logo.png"
-                      width="120"
-                      height="40"
-                      alt="Zainab Star Logo"
-                      className="h-8 w-auto object-contain group-hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-                </div>
-              </div>
-              <p className="text-gray-400 mb-4">
-                Leading technology platform showcasing premium solutions across the Middle East and Africa.
-              </p>
-              <div className="flex space-x-4">
-                {["Facebook", "Twitter", "Instagram"].map((social, index) => (
-                  <div key={social} className="hover:scale-120 hover:-translate-y-1 transition-all duration-300">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="text-gray-400 hover:text-white transition-colors duration-300"
-                      onClick={() => alert(`Opening ${social} page...`)}
-                    >
-                      {social}
-                    </Button>
-                  </div>
-                ))}
-              </div>
+      <footer className="bg-gray-800 text-white py-8">
+        <div className="container px-4 md:px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="space-y-4">
+            <h3 className="text-xl font-bold">Zainab Star</h3>
+            <p className="text-gray-400">
+              Your trusted partner for cutting-edge technology solutions in the MENA region.
+            </p>
+            <div className="flex space-x-4">
+              <Link href="#" className="text-gray-400 hover:text-white transition-colors duration-300">
+                <svg
+                  className="h-6 w-6"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33V22C18.343 21.128 22 16.991 22 12z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </Link>
+              <Link href="#" className="text-gray-400 hover:text-white transition-colors duration-300">
+                <svg
+                  className="h-6 w-6"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M12.315 2c2.43 0 2.784.007 3.792.052 1.01.045 1.79.204 2.428.465.66.275 1.21.593 1.77.96.472.308.864.696 1.272 1.104.408.408.796.904 1.104 1.272.367.56.69 1.118.96 1.77.262.638.42 1.418.465 2.428.045 1.008.052 1.358.052 3.792s-.007 2.784-.052 3.792c-.045 1.01-.204 1.79-.465 2.428-.275.66-.593 1.21-.96 1.77-.308.472-.696.864-1.104 1.272-.408.408-.904.796-1.272 1.104-.56.367-1.118.69-1.77.96-.638.262-1.418.42-2.428.465-1.008.045-1.358.052-3.792.052s-2.784-.007-3.792-.052c-1.01-.045-1.79-.204-2.428-.465-.66-.275-1.21-.593-1.77-.96-.308-.472-.696-.864-1.104-1.272-.408-.408-.796-.904-1.272-1.104-.367-.56-.69-1.118-.96-1.77-.262-.638-.42-1.418-.465-2.428-.045-1.008-.052-1.358-.052-3.792s.007-2.784.052-3.792c.045-1.01.204 1.79.465 2.428.275-.66.593-1.21.96-1.77.308-.472.696-.864 1.104-1.272.408-.408.904-.796 1.272-1.104.56-.367 1.118-.69 1.77-.96.638-.262 1.418-.42 2.428-.465C9.536 2.007 9.886 2 12.315 2zm0 2.16c-2.18 0-2.448.01-3.298.05-.84.038-1.45.175-1.898.344-.466.18-.79.35-1.01.57-.22.22-.39.534-.57.99-.178.448-.315 1.058-.354 1.898-.04 2.15-.04 2.418-.04 3.258 0 .84.01 1.108.04 3.298.038.84.175 1.45.344 1.898.18.466.35.79.57 1.01.22.22.534.39.99.57.448.178 1.058.315 1.898.354 2.15.04 2.418.04 3.258.04s1.108-.01 3.298-.04c.84-.038 1.45-.175 1.898-.344.466-.18.79-.35 1.01-.57.22-.22.39-.534.57-.99.178-.448.315-1.058.354-1.898.04-2.15.04-2.418.04-3.258 0-.84-.01-1.108-.04-3.298-.038-.84-.175-1.45-.344-1.898-.18-.466-.35-.79-.57-1.01-.22-.22-.534-.39-.99-.57-.448-.178-1.058-.315-1.898-.354C14.763 4.16 14.495 4.16 12.315 4.16zm0 3.615a4.545 4.545 0 100 9.09 4.545 4.545 0 000-9.09zm0 7.47a2.925 2.925 0 110-5.85 2.925 2.925 0 010 5.85z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </Link>
+              <Link href="#" className="text-gray-400 hover:text-white transition-colors duration-300">
+                <svg
+                  className="h-6 w-6"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M.05 13.916c0-1.412.63-2.73 1.688-3.916 1.058-1.186 2.42-2.12 4.08-2.794C7.49 6.63 9.3 6.25 11.25 6.25c1.95 0 3.76.38 5.482 1.046 1.66.674 3.022 1.608 4.08 2.794 1.058 1.186 1.688 2.504 1.688 3.916 0 1.412-.63 2.73-1.688 3.916-1.058 1.186-2.42 2.12-4.08-2.794C.68 16.646.05 15.328.05 13.916zM12 18.25c-3.45 0-6.25-2.8-6.25-6.25S8.55 5.75 12 5.75s6.25 2.8 6.25 6.25-2.8 6.25-6.25 6.25z"
+                    fillRule="evenodd"
+                  />
+                </svg>
+              </Link>
             </div>
-
-            {[
-              {
-                title: "Products",
-                links: [
-                  { name: "Laptops", href: "/products?category=laptops" },
-                  { name: "Gaming Equipment", href: "/products?category=gaming" },
-                  { name: "Audio & Accessories", href: "/products?category=audio" },
-                  { name: "Monitors", href: "/products?category=monitors" },
-                ],
-              },
-              {
-                title: "Company",
-                links: [
-                  { name: "About Us", href: "/about" },
-                  { name: "Our Partners", href: "/partners" },
-                  { name: "Testimonials", href: "/testimonials" },
-                  { name: "Support", href: "/support" },
-                ],
-              },
-              {
-                title: "Contact",
-                links: [
-                  { name: "Email: info@head-links.com", href: "mailto:info@head-links.com" },
-                  { name: "Phone: +971 56 455 4437", href: "tel:+971564554437" },
-                  { name: "Address: 201 BB03 Bay Square, Business Bay, Dubai, UAE", href: "#" },
-                ],
-              },
-            ].map((section, index) => (
-              <div key={section.title} className="animate-fade-in-up" style={{ animationDelay: `${index * 100}ms` }}>
-                <h3 className="text-lg font-semibold mb-4">{section.title}</h3>
-                <ul className="space-y-2 text-gray-400">
-                  {section.links.map((link, linkIndex) => (
-                    <li key={linkIndex} className="hover:translate-x-1 transition-transform duration-300">
-                      {section.title === "Contact" && (link.name.includes("Email") || link.name.includes("Phone")) ? (
-                        <a href={link.href} className="hover:text-white transition-colors duration-300">
-                          {link.name}
-                        </a>
-                      ) : section.title === "Contact" ? (
-                        <span>{link.name}</span>
-                      ) : (
-                        <Link href={link.href} className="hover:text-white transition-colors duration-300">
-                          {link.name}
-                        </Link>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
           </div>
 
-          <div
-            className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400 animate-fade-in"
-            style={{ animationDelay: "400ms" }}
-          >
-            <p>&copy; {new Date().getFullYear()} Zainab Star. All rights reserved.</p>
+          <div className="space-y-4">
+            <h3 className="text-xl font-bold">Quick Links</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/about" className="text-gray-400 hover:text-white transition-colors duration-300">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link href="/products" className="text-gray-400 hover:text-white transition-colors duration-300">
+                  Products
+                </Link>
+              </li>
+              <li>
+                <Link href="/partners" className="text-gray-400 hover:text-white transition-colors duration-300">
+                  Partners
+                </Link>
+              </li>
+              <li>
+                <Link href="/support" className="text-gray-400 hover:text-white transition-colors duration-300">
+                  Support
+                </Link>
+              </li>
+              <li>
+                <Link href="/testimonials" className="text-gray-400 hover:text-white transition-colors duration-300">
+                  Testimonials
+                </Link>
+              </li>
+            </ul>
           </div>
+
+          <div className="space-y-4">
+            <h3 className="text-xl font-bold">Contact Info</h3>
+            <p className="text-gray-400">
+              123 Tech Avenue, Innovation City, MENA Region
+            </p>
+            <p className="text-gray-400">
+              Email: info@zainabstar.com
+            </p>
+            <p className="text-gray-400">
+              Phone: +971 50 123 4567
+            </p>
+          </div>
+        </div>
+        <div className="container px-4 md:px-6 text-center text-gray-500 mt-8 border-t border-gray-700 pt-8">
+          &copy; 2024 Zainab Star. All rights reserved.
         </div>
       </footer>
     </div>
   )
+  
 }
