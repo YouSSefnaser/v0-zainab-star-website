@@ -194,7 +194,9 @@ export default function AboutPage() {
                 <div className="space-y-4">
                   <h3 className="text-2xl font-bold text-gray-900">Regional Expansion</h3>
                   <p className="leading-relaxed text-black">
-                    Today, Zainab Star serves customers across the UAE beyond. Our regional presence allows us to understand local needs while leveraging global technology trends to deliver solutions that truly make a difference.
+                    Today, Zainab Star serves customers across the UAE beyond. Our regional presence allows us to
+                    understand local needs while leveraging global technology trends to deliver solutions that truly
+                    make a difference.
                   </p>
                 </div>
               </div>
